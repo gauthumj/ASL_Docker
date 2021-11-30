@@ -1,19 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <meta charset="utf-8">
+        <meta content="ugh, hi." name="description">
+        <meta content="Makeup Webcam" name="title">
+        <title>Face Detection</title>
+        <style>
+         #container {
+             margin: 0px auto;
+             border: 10px #333 solid;
+         }
+         #videoElement {
+             width: 640px;
+             height: 480px;
+             display: none;
+             background-color: #666;
+         }
+
+         #imageElement {
+             width: 640px;
+             height: 480px;
+             background-color: #666;
+         }
+
+         #canvasElement {
+             width: 640px;
+             height: 480px;
+             border: 1px solid black;
+         }
+         #photo {
+             width: 640px;
+             height: 480px;
+
+             border: 1px solid black;
+         }
+        </style>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h3 class="mt-5">Live Streaming</h3>
-                    <img src="{{ url_for('video_feed') }}" width="100%" />
-                </div>
+        <div id="container">
+            <div>
+            <video autoplay="true" id="videoElement"></video>
+                <canvas id="canvasElement"></canvas>
+
+                <img id="photo">
             </div>
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 </html>
