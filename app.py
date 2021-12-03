@@ -1,7 +1,10 @@
-from sys import stdout
+from sys import meta_path, stdout
+from flask.globals import request
 from makeup_artist import ProcessImage
 import logging
+import eventlet
 from flask import Flask, render_template, Response
+from flask_cors import CORS, core, cross_origin
 from flask_socketio import SocketIO, emit
 from camera import Camera
 from utils import base64_to_pil_image, pil_image_to_base64
@@ -11,7 +14,12 @@ app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(stdout))
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+# cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
+CORS(app)
 socketio = SocketIO(app)
+socketio.init_app(app=app, cors_allowed_origins="*")
 camera = Camera(ProcessImage())
 
 
@@ -32,7 +40,8 @@ def test_connect():
     app.logger.info("client connected")
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+@cross_origin()
 def index():
     """Video streaming home page."""
     return render_template('index.html')
