@@ -37,6 +37,8 @@ def test_message(input):
 
 @socketio.on('connect', namespace='/test')
 def test_connect():
+    print("Client connected")
+    socketio.logger.info("Client connected")
     app.logger.info("client connected")
 
 
@@ -56,7 +58,7 @@ def gen():
         print("output " + frame)
         app.logger.info("output" + frame)
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               b'Content-Type: text\r\n\r\n' + frame + b'\r\n')
 
 
 @app.route('/video_feed')
